@@ -1,15 +1,15 @@
-//  backgroundImage:
-//               "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')",
-//           }}
+// //  backgroundImage:
+// //               "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')",
+// //           }}
 
-//              <div className="absolute inset-0 z-20 pointer-events-none">
+// //              <div className="absolute inset-0 z-20 pointer-events-none">
 
-//           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-60 blur-[200px] animate-glow1"></div>
+// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-60 blur-[200px] animate-glow1"></div>
 
-//           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-80 blur-[300px] animate-glow2"></div>
+// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-80 blur-[300px] animate-glow2"></div>
 
-//           <div className="absolute w-[400px] h-[400px] rounded-full bg-red-800 opacity-80 blur-[300px] animate-glow3"></div>{" "}
-//         </div>
+// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-red-800 opacity-80 blur-[300px] animate-glow3"></div>{" "}
+// //         </div>
 
 //  {
 //                 title: "Strength & Conditioning",
