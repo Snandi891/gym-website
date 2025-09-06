@@ -582,9 +582,14 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 relative" id="about">
+      <section
+        className="py-20 bg-amber-50  relative bg-center bg-no-repeat bg-contain"
+        id="about"
+        style={{ backgroundImage: "url('/p1.png')" }}
+      >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex flex-col md:flex-row items-center gap-12 p-8 ">
+            {/* Left Side */}
             <motion.div
               className="md:w-1/2 relative"
               initial={{ opacity: 0, x: -50 }}
@@ -607,6 +612,8 @@ export default function Home() {
                 <div className="text-sm">Years of Excellence</div>
               </div>
             </motion.div>
+
+            {/* Right Side */}
             <motion.div
               className="md:w-1/2"
               initial={{ opacity: 0, x: 50 }}
@@ -623,6 +630,8 @@ export default function Home() {
                 facilities, and a supportive community that inspires you to push
                 beyond your limits.
               </p>
+
+              {/* Features */}
               <div className="space-y-4 mb-8">
                 {[
                   {
@@ -664,6 +673,8 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+
+              {/* Button */}
               <button className="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md group relative overflow-hidden">
                 <span className="relative z-10">LEARN MORE ABOUT US</span>
                 <span className="absolute inset-0 bg-amber-800 transform origin-bottom scale-y-0 transition-transform duration-300 group-hover:scale-y-100"></span>
