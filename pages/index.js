@@ -432,6 +432,7 @@ export default function Home() {
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
         ref={heroRef}
+        id="home"
       >
         {/* Background image with overlay */}
         <div
