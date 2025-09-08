@@ -16,7 +16,6 @@ import {
   FaShower,
   FaArrowRight,
 } from "react-icons/fa";
-import { useInView } from "react-intersection-observer";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1116,30 +1115,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trainers Section */}
+      {/* Enhanced Trainers Section */}
       <section
-        className="py-24 bg-gradient-to-br from-amber-50 to-amber-100 relative overflow-hidden"
+        className="py-28 bg-gradient-to-br from-amber-50 to-amber-100/80 relative overflow-hidden"
         id="trainers"
       >
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="inline-flex items-center justify-center mb-6">
-              <div className="w-12 h-0.5 bg-amber-600 mr-4"></div>
-              <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
-                Expert Team
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+        <div className="absolute top-10 right-10 w-72 h-72 bg-amber-300/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-amber-400/10 rounded-full blur-xl"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-24">
+            <div className="inline-flex items-center justify-center mb-8">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-amber-600 mr-4"></div>
+              <span className="text-amber-700 font-medium tracking-widest uppercase text-sm">
+                Elite Training Team
               </span>
-              <div className="w-12 h-0.5 bg-amber-600 ml-4"></div>
+              <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-amber-600 ml-4"></div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 font-serif tracking-tight">
-              MEET OUR <span className="text-amber-700">EXPERT TRAINERS</span>
+            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-amber-900 font-serif tracking-tight">
+              WORLD-CLASS{" "}
+              <span className="text-amber-700">FITNESS EXPERTS</span>
             </h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Our certified trainers bring years of experience and expertise to
-              help you achieve your fitness goals.
+            <p className="text-xl text-amber-800/90 leading-relaxed max-w-2xl mx-auto">
+              Our internationally certified trainers combine decades of
+              expertise with cutting-edge techniques to deliver exceptional
+              results and transform your fitness journey.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
               {
                 name: "Marcus Johnson",
@@ -1151,6 +1157,8 @@ export default function Home() {
                   "Athletic Performance",
                   "Functional Training",
                 ],
+                experience: "15+ years",
+                certification: "ISSA Master Trainer",
               },
               {
                 name: "Sarah Williams",
@@ -1162,6 +1170,8 @@ export default function Home() {
                   "Weight Management",
                   "Wellness Coaching",
                 ],
+                experience: "12+ years",
+                certification: "Precision Nutrition L2",
               },
               {
                 name: "James Rodriguez",
@@ -1169,6 +1179,8 @@ export default function Home() {
                 image:
                   "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
                 specialties: ["Boxing", "MMA", "Combat Conditioning"],
+                experience: "18+ years",
+                certification: "NSCA-CSCS",
               },
               {
                 name: "Elena Chen",
@@ -1176,65 +1188,101 @@ export default function Home() {
                 image:
                   "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1820&q=80",
                 specialties: ["Yoga", "Flexibility", "Injury Prevention"],
+                experience: "10+ years",
+                certification: "E-RYT 500, YACEP",
               },
             ].map((trainer, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group"
+                className="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-3 group border border-amber-200/50"
               >
                 <div className="h-80 overflow-hidden relative">
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className="px-3 py-1 bg-amber-600/90 text-white text-xs font-semibold rounded-full shadow-md">
+                      {trainer.experience}
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-amber-900/50 via-transparent to-transparent z-10"></div>
                   <img
                     src={trainer.image}
                     alt={trainer.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-xl font-bold text-white">
+                  <div className="absolute bottom-5 left-5 z-20">
+                    <h3 className="text-2xl font-bold text-white tracking-tight drop-shadow-md">
                       {trainer.name}
                     </h3>
-                    <p className="text-amber-300">{trainer.role}</p>
+                    <p className="text-amber-300 font-medium">{trainer.role}</p>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h4 className="text-sm font-semibold text-amber-700 mb-2">
-                    SPECIALTIES:
+
+                <div className="p-7">
+                  <div className="mb-5">
+                    <span className="text-xs font-semibold text-amber-700 tracking-wider">
+                      {trainer.certification}
+                    </span>
+                  </div>
+
+                  <h4 className="text-sm font-semibold text-amber-700 mb-3 tracking-wider border-b border-amber-200 pb-2">
+                    SPECIALTIES
                   </h4>
-                  <ul className="space-y-1">
+
+                  <ul className="space-y-2 mb-6">
                     {trainer.specialties.map((specialty, i) => (
-                      <li key={i} className="flex items-center text-gray-700">
+                      <li
+                        key={i}
+                        className="flex items-center text-amber-900/90 text-sm"
+                      >
                         <svg
-                          className="w-4 h-4 text-amber-600 mr-2"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                          className="w-4 h-4 text-amber-600 mr-3 flex-shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
                           ></path>
                         </svg>
                         {specialty}
                       </li>
                     ))}
                   </ul>
-                  <button className="mt-4 w-full bg-amber-100 hover:bg-amber-700 text-amber-700 hover:text-white font-semibold py-2 rounded-full transition-all duration-300">
+
+                  <button className="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-3.5 rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg flex items-center justify-center group/btn">
                     View Profile
+                    <svg
+                      className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      ></path>
+                    </svg>
                   </button>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          <div className="text-center mt-20">
+            <button className="px-10 py-4 border-2 border-amber-600 text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg transition-all duration-300 font-medium tracking-wide transform hover:-translate-y-0.5 shadow-md hover:shadow-lg">
+              Explore All Trainers
+            </button>
+          </div>
         </div>
       </section>
-
       {/* Membership Plans Section */}
       <section
         className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden"
