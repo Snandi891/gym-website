@@ -1,49 +1,88 @@
-// //  backgroundImage:
-// //               "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')",
-// //           }}
+<section
+  className="py-20 bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 text-white relative"
+  id="testimonials"
+>
+  <div className="container mx-auto px-4">
+    {/* Header */}
+    <div className="text-center max-w-3xl mx-auto mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
+        SUCCESS <span className="text-amber-200">STORIES</span>
+      </h2>
+      <p className="text-lg text-amber-100">
+        Hear from our members who have transformed their lives with Elite
+        Performance
+      </p>
+    </div>
 
-// //              <div className="absolute inset-0 z-20 pointer-events-none">
+    {/* Testimonials */}
+    <div className="relative max-w-4xl mx-auto">
+      <div className="relative h-96 overflow-hidden">
+        {[
+          {
+            name: "Michael Chen",
+            tenure: "Member for 3 years",
+            text: "Elite Performance transformed my approach to fitness. The trainers' expertise and the community support helped me lose 40lbs and complete my first marathon.",
+            image:
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=774&q=80",
+          },
+          {
+            name: "Sarah Johnson",
+            tenure: "Member for 2 years",
+            text: "The personalized nutrition plan and strength training program helped me build muscle and confidence. I've never felt stronger or more empowered!",
+            image:
+              "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=776&q=80",
+          },
+          {
+            name: "David Rodriguez",
+            tenure: "Member for 4 years",
+            text: "After my injury, the trainers at Elite Performance created a rehab program that got me back to competing. Their knowledge and support were incredible.",
+            image:
+              "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=798&q=80",
+          },
+        ].map((testimonial, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-in-out ${
+              activeTestimonial === index
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
+          >
+            {/* Avatar */}
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-4 border-amber-200 shadow-lg ring-4 ring-amber-700/30">
+              <img
+                src={testimonial.image}
+                alt={testimonial.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Quote */}
+            <p className="text-xl md:text-2xl italic mb-6 leading-relaxed max-w-2xl mx-auto text-amber-50">
+              “{testimonial.text}”
+            </p>
+            {/* Name */}
+            <h4 className="font-bold text-amber-200 text-lg">
+              {testimonial.name}
+            </h4>
+            <p className="text-amber-100 text-sm">{testimonial.tenure}</p>
+          </div>
+        ))}
+      </div>
 
-// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-60 blur-[200px] animate-glow1"></div>
-
-// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-80 blur-[300px] animate-glow2"></div>
-
-// //           <div className="absolute w-[400px] h-[400px] rounded-full bg-red-800 opacity-80 blur-[300px] animate-glow3"></div>{" "}
-// //         </div>
-
-//  {
-//                 title: "Strength & Conditioning",
-//                 desc: "Build functional strength and power with our expert-led programs",
-//                 price: "$199/month",
-//                 image:
-//                   "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-//                 features: [
-//                   "Customized Plans",
-//                   "Progressive Overload",
-//                   "Recovery Guidance",
-//                 ],
-//               },
-//               {
-//                 title: "1-on-1 Personal Training",
-//                 desc: "Get personalized attention with our certified expert trainers",
-//                 price: "$299/month",
-//                 image:
-//                   "https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
-//                 features: [
-//                   "Tailored Workouts",
-//                   "Nutrition Planning",
-//                   "24/7 Support",
-//                 ],
-//               },
-//               {
-//                 title: "Group Fitness",
-//                 desc: "Motivating group classes from HIIT to yoga and everything between",
-//                 price: "$149/month",
-//                 image:
-//                   "https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80",
-//                 features: [
-//                   "Varied Class Types",
-//                   "Community Atmosphere",
-//                   "Flexible Scheduling",
-//                 ],
-//               },
+      {/* Dots */}
+      <div className="flex justify-center space-x-3 mt-10">
+        {[0, 1, 2].map((index) => (
+          <button
+            key={index}
+            onClick={() => setActiveTestimonial(index)}
+            className={`w-4 h-4 rounded-full transition-all duration-300 ${
+              activeTestimonial === index
+                ? "bg-amber-200 scale-110 shadow-md"
+                : "bg-amber-200/40 hover:bg-amber-200/70"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>;

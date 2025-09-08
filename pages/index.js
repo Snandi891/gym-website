@@ -7,6 +7,16 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import {
+  FaDumbbell,
+  FaRunning,
+  FaSnowflake,
+  FaUsers,
+  FaBox,
+  FaShower,
+  FaArrowRight,
+} from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +28,10 @@ export default function Home() {
   const statsRef = useRef(null);
   const heroRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
@@ -80,9 +94,175 @@ export default function Home() {
     };
   }, []);
 
-  const toggleFaq = (index) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
+  const faqData = [
+    {
+      question: "What are your operating hours?",
+      answer:
+        "We're open 24/7 for all Performance and Elite members. Essential members have access from 5 AM to 11 PM daily.",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      question: "Do you offer personal training?",
+      answer:
+        "Yes, we have over 40 certified personal trainers specializing in various disciplines. All our trainers have extensive experience and certifications.",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      question: "Can I freeze my membership?",
+      answer:
+        "Yes, you can freeze your membership for up to 3 months per year for medical reasons or travel. A small monthly maintenance fee applies during the freeze period.",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      question: "What's included in the free trial?",
+      answer:
+        "Our 7-day free trial includes access to all facilities, group classes, and one complimentary personal training session.",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      question: "Do you have nutrition guidance?",
+      answer:
+        "Yes, all our Performance and Elite members receive personalized nutrition plans. We also offer nutrition workshops and one-on-one consultations with our certified nutritionists.",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A1.5 1.5 0 013 15.546V5a2 2 0 012-2h14a2 2 0 012 2v10.546z"
+          ></path>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 8v4l3 3"
+          ></path>
+        </svg>
+      ),
+    },
+  ];
+
+  const facilities = [
+    {
+      title: "Strength Training Zone",
+      image:
+        "https://images.unsplash.com/photo-1580261450046-d0a30080dc9b?auto=format&fit=crop&w=2091&q=80",
+      description:
+        "Premium equipment for powerlifting, weight training and functional fitness",
+      icon: <FaDumbbell className="text-amber-600 text-xl" />,
+      badge: "Relaxation",
+    },
+    {
+      title: "Cardio Theater",
+      image:
+        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description:
+        "Latest cardio equipment with personal entertainment systems",
+      icon: <FaRunning className="text-amber-600 text-xl" />,
+      badge: "Premium",
+    },
+    {
+      title: "Recovery Lounge",
+      image:
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1820&q=80",
+      description:
+        "Cryotherapy, massage chairs and compression therapy for optimal recovery",
+      icon: <FaSnowflake className="text-amber-600 text-xl" />,
+      badge: "Premium",
+    },
+    {
+      title: "Group Fitness Studio",
+      image:
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=2070&q=80",
+      description:
+        "Spacious studios for yoga, pilates, HIIT and specialized classes",
+      icon: <FaUsers className="text-amber-600 text-xl" />,
+      badge: "Elite",
+    },
+    {
+      title: "Boxing & MMA Arena",
+      image:
+        "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=2069&q=80",
+      description: "Professional-grade boxing ring and MMA training equipment",
+      icon: <FaBox className="text-amber-600 text-xl" />,
+      badge: "Elite",
+    },
+    {
+      title: "Luxury Locker Rooms",
+      image:
+        "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=2070&q=80",
+      description:
+        "Premium amenities including sauna, steam room and towel service",
+      icon: <FaShower className="text-amber-600 text-xl" />,
+      badge: "Relaxation",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans overflow-x-hidden">
@@ -97,10 +277,10 @@ export default function Home() {
 
       {/* Animated Background Elements */}
 
-      <div className="absolute inset-0 z-20 pointer-events-none">
-        <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-60 blur-[200px] animate-glow1"></div>
-        <div className="absolute w-[400px] h-[400px] rounded-full bg-orange-800 opacity-80 blur-[300px] animate-glow2"></div>
-        <div className="absolute w-[400px] h-[400px] rounded-full bg-red-800 opacity-80 blur-[300px] animate-glow3"></div>{" "}
+      <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+        <div className="absolute w-[60vw] h-[60vw] max-w-[400px] max-h-[400px] rounded-full bg-orange-800 opacity-60 blur-[200px] animate-glow1"></div>
+        <div className="absolute w-[60vw] h-[60vw] max-w-[400px] max-h-[400px] rounded-full bg-orange-800 opacity-80 blur-[250px] animate-glow2"></div>
+        <div className="absolute w-[60vw] h-[60vw] max-w-[400px] max-h-[400px] rounded-full bg-red-800 opacity-80 blur-[250px] animate-glow3"></div>
       </div>
 
       {/* Navigation */}
@@ -935,6 +1115,125 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trainers Section */}
+      <section
+        className="py-24 bg-gradient-to-br from-amber-50 to-amber-100 relative overflow-hidden"
+        id="trainers"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <div className="inline-flex items-center justify-center mb-6">
+              <div className="w-12 h-0.5 bg-amber-600 mr-4"></div>
+              <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
+                Expert Team
+              </span>
+              <div className="w-12 h-0.5 bg-amber-600 ml-4"></div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 font-serif tracking-tight">
+              MEET OUR <span className="text-amber-700">EXPERT TRAINERS</span>
+            </h2>
+            <p className="text-xl text-gray-700 leading-relaxed">
+              Our certified trainers bring years of experience and expertise to
+              help you achieve your fitness goals.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Marcus Johnson",
+                role: "Strength & Conditioning",
+                image:
+                  "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2187&q=80",
+                specialties: [
+                  "Powerlifting",
+                  "Athletic Performance",
+                  "Functional Training",
+                ],
+              },
+              {
+                name: "Sarah Williams",
+                role: "Nutrition & Wellness",
+                image:
+                  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                specialties: [
+                  "Nutrition Planning",
+                  "Weight Management",
+                  "Wellness Coaching",
+                ],
+              },
+              {
+                name: "James Rodriguez",
+                role: "Boxing & MMA",
+                image:
+                  "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+                specialties: ["Boxing", "MMA", "Combat Conditioning"],
+              },
+              {
+                name: "Elena Chen",
+                role: "Yoga & Mobility",
+                image:
+                  "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1820&q=80",
+                specialties: ["Yoga", "Flexibility", "Injury Prevention"],
+              },
+            ].map((trainer, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group"
+              >
+                <div className="h-80 overflow-hidden relative">
+                  <img
+                    src={trainer.image}
+                    alt={trainer.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-xl font-bold text-white">
+                      {trainer.name}
+                    </h3>
+                    <p className="text-amber-300">{trainer.role}</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h4 className="text-sm font-semibold text-amber-700 mb-2">
+                    SPECIALTIES:
+                  </h4>
+                  <ul className="space-y-1">
+                    {trainer.specialties.map((specialty, i) => (
+                      <li key={i} className="flex items-center text-gray-700">
+                        <svg
+                          className="w-4 h-4 text-amber-600 mr-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          ></path>
+                        </svg>
+                        {specialty}
+                      </li>
+                    ))}
+                  </ul>
+                  <button className="mt-4 w-full bg-amber-100 hover:bg-amber-700 text-amber-700 hover:text-white font-semibold py-2 rounded-full transition-all duration-300">
+                    View Profile
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Membership Plans Section */}
       <section
         className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden"
@@ -1067,395 +1366,279 @@ export default function Home() {
 
       {/* Facilities Section */}
       <section
-        className="py-24 bg-white relative overflow-hidden"
+        className="py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100"
         id="facilities"
+        style={{
+          backgroundImage: "url('/smoke3.png'), url('/smoke4.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
       >
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="inline-flex items-center justify-center mb-6">
-              <div className="w-12 h-0.5 bg-amber-600 mr-4"></div>
+        {/* Animated background elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/5 rounded-full"></div>
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-amber-700/5 rounded-full"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+            <motion.div
+              className="inline-flex items-center justify-center mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <div className="w-8 md:w-12 h-0.5 bg-amber-600 mr-4"></div>
               <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
                 World-Class Facilities
               </span>
-              <div className="w-12 h-0.5 bg-amber-600 ml-4"></div>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 font-serif tracking-tight">
+              <div className="w-8 md:w-12 h-0.5 bg-amber-600 ml-4"></div>
+            </motion.div>
+
+            <motion.h2
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900 font-serif tracking-tight"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
               PREMIUM <span className="text-amber-700">TRAINING</span>{" "}
               ENVIRONMENT
-            </h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
+            </motion.h2>
+
+            <motion.p
+              className="text-lg md:text-xl text-gray-700 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               Our state-of-the-art facilities are designed to provide the
               perfect environment for achieving your fitness goals.
-            </p>
+            </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Strength Training Zone",
-                image:
-                  "https://images.unsplash.com/photo-1580261450046-d0a30080dc9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2091&q=80",
-                description:
-                  "Premium equipment for powerlifting, weight training and functional fitness",
-              },
-              {
-                title: "Cardio Theater",
-                image:
-                  "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1931&q=80",
-                description:
-                  "Latest cardio equipment with personal entertainment systems",
-              },
-              {
-                title: "Recovery Lounge",
-                image:
-                  "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1820&q=80",
-                description:
-                  "Cryotherapy, massage chairs and compression therapy for optimal recovery",
-              },
-              {
-                title: "Group Fitness Studio",
-                image:
-                  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                description:
-                  "Spacious studios for yoga, pilates, HIIT and specialized classes",
-              },
-              {
-                title: "Boxing & MMA Arena",
-                image:
-                  "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
-                description:
-                  "Professional-grade boxing ring and MMA training equipment",
-              },
-              {
-                title: "Luxury Locker Rooms",
-                image:
-                  "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                description:
-                  "Premium amenities including sauna, steam room and towel service",
-              },
-            ].map((facility, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {facilities.map((facility, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+                initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.7,
+                  delay: index * 0.2,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                whileHover={{
+                  y: -15,
+                  transition: { duration: 0.3, ease: "easeOut" },
+                }}
+                className="group rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 bg-white border border-white/20 relative shine-effect"
               >
-                <div className="h-64 overflow-hidden relative">
+                {/* Decorative background elements */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-white/10 pointer-events-none z-10"></div>
+                <div className="absolute top-4 left-4 w-24 h-24 bg-amber-400/10 rounded-full blur-xl"></div>
+                <div className="absolute bottom-4 right-4 w-32 h-32 bg-blue-500/10 rounded-full blur-xl"></div>
+
+                {/* Image container */}
+                <div className="h-72 overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent z-10 opacity-80 group-hover:opacity-90 transition-opacity duration-700"></div>
+
                   <img
                     src={facility.image}
                     alt={facility.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+                  {/* Premium icon badge */}
+                  <div className="absolute top-5 right-5 w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 z-20">
+                    <div className="text-white text-2xl">{facility.icon}</div>
+                  </div>
+
+                  {/* Premium ribbon badge */}
+                  <div className="absolute top-5 left-0 bg-gradient-to-r from-amber-500 to-amber-700 text-white text-xs font-bold px-4 py-2 shadow-lg z-20 uppercase tracking-wider">
+                    {facility.badge}
+                  </div>
+
+                  {/* Hover title overlay */}
+                  <div className="absolute bottom-0 left-0 w-full p-6 text-center opacity-0 group-hover:opacity-100 translate-y-6 group-hover:translate-y-0 transition-all duration-700 z-20">
+                    <h3 className="text-2xl font-bold text-white mb-3 font-playfair">
+                      {facility.title}
+                    </h3>
+                    <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full"></div>
+                  </div>
                 </div>
-                <div className="p-6 bg-white">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+
+                {/* Content container */}
+                <div className="p-7 bg-gradient-to-b from-white to-slate-50 relative">
+                  {/* Decorative top element */}
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-amber-400 to-amber-600 rotate-45 rounded-sm shadow-lg"></div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center group-hover:text-amber-700 transition-colors duration-500 font-playfair">
                     {facility.title}
                   </h3>
-                  <p className="text-gray-700">{facility.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Trainers Section */}
-      <section
-        className="py-24 bg-gradient-to-br from-amber-50 to-amber-100 relative overflow-hidden"
-        id="trainers"
-      >
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="inline-flex items-center justify-center mb-6">
-              <div className="w-12 h-0.5 bg-amber-600 mr-4"></div>
-              <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
-                Expert Team
-              </span>
-              <div className="w-12 h-0.5 bg-amber-600 ml-4"></div>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 font-serif tracking-tight">
-              MEET OUR <span className="text-amber-700">EXPERT TRAINERS</span>
-            </h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Our certified trainers bring years of experience and expertise to
-              help you achieve your fitness goals.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                name: "Marcus Johnson",
-                role: "Strength & Conditioning",
-                image:
-                  "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2187&q=80",
-                specialties: [
-                  "Powerlifting",
-                  "Athletic Performance",
-                  "Functional Training",
-                ],
-              },
-              {
-                name: "Sarah Williams",
-                role: "Nutrition & Wellness",
-                image:
-                  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                specialties: [
-                  "Nutrition Planning",
-                  "Weight Management",
-                  "Wellness Coaching",
-                ],
-              },
-              {
-                name: "James Rodriguez",
-                role: "Boxing & MMA",
-                image:
-                  "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
-                specialties: ["Boxing", "MMA", "Combat Conditioning"],
-              },
-              {
-                name: "Elena Chen",
-                role: "Yoga & Mobility",
-                image:
-                  "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1820&q=80",
-                specialties: ["Yoga", "Flexibility", "Injury Prevention"],
-              },
-            ].map((trainer, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group"
-              >
-                <div className="h-80 overflow-hidden relative">
-                  <img
-                    src={trainer.image}
-                    alt={trainer.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-xl font-bold text-white">
-                      {trainer.name}
-                    </h3>
-                    <p className="text-amber-300">{trainer.role}</p>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h4 className="text-sm font-semibold text-amber-700 mb-2">
-                    SPECIALTIES:
-                  </h4>
-                  <ul className="space-y-1">
-                    {trainer.specialties.map((specialty, i) => (
-                      <li key={i} className="flex items-center text-gray-700">
-                        <svg
-                          className="w-4 h-4 text-amber-600 mr-2"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                        {specialty}
-                      </li>
-                    ))}
-                  </ul>
-                  <button className="mt-4 w-full bg-amber-100 hover:bg-amber-700 text-amber-700 hover:text-white font-semibold py-2 rounded-full transition-all duration-300">
-                    View Profile
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section
-        className="py-20 bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 text-white relative"
-        id="testimonials"
-      >
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif">
-              SUCCESS <span className="text-amber-200">STORIES</span>
-            </h2>
-            <p className="text-lg text-amber-100">
-              Hear from our members who have transformed their lives with Elite
-              Performance
-            </p>
-          </div>
-
-          {/* Testimonials */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative h-96 overflow-hidden">
-              {[
-                {
-                  name: "Michael Chen",
-                  tenure: "Member for 3 years",
-                  text: "Elite Performance transformed my approach to fitness. The trainers' expertise and the community support helped me lose 40lbs and complete my first marathon.",
-                  image:
-                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=774&q=80",
-                },
-                {
-                  name: "Sarah Johnson",
-                  tenure: "Member for 2 years",
-                  text: "The personalized nutrition plan and strength training program helped me build muscle and confidence. I've never felt stronger or more empowered!",
-                  image:
-                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=776&q=80",
-                },
-                {
-                  name: "David Rodriguez",
-                  tenure: "Member for 4 years",
-                  text: "After my injury, the trainers at Elite Performance created a rehab program that got me back to competing. Their knowledge and support were incredible.",
-                  image:
-                    "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=798&q=80",
-                },
-              ].map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-in-out ${
-                    activeTestimonial === index
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                >
-                  {/* Avatar */}
-                  <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-4 border-amber-200 shadow-lg ring-4 ring-amber-700/30">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  {/* Quote */}
-                  <p className="text-xl md:text-2xl italic mb-6 leading-relaxed max-w-2xl mx-auto text-amber-50">
-                    “{testimonial.text}”
+                  <p className="text-gray-600 text-center leading-relaxed text-sm mb-5 font-light">
+                    {facility.description}
                   </p>
-                  {/* Name */}
-                  <h4 className="font-bold text-amber-200 text-lg">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-amber-100 text-sm">{testimonial.tenure}</p>
-                </div>
-              ))}
-            </div>
 
-            {/* Dots */}
-            <div className="flex justify-center space-x-3 mt-10">
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveTestimonial(index)}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                    activeTestimonial === index
-                      ? "bg-amber-200 scale-110 shadow-md"
-                      : "bg-amber-200/40 hover:bg-amber-200/70"
-                  }`}
-                />
-              ))}
-            </div>
+                  {/* CTA button */}
+                  <div className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-700 text-white font-medium py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group/btn"
+                    >
+                      <span className="mr-2">Explore Facility</span>
+                      <svg
+                        className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+          {/* View All Button */}
+          <motion.div
+            className="text-center mt-12 md:mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <button className="px-6 py-3 md:px-8 md:py-3 bg-amber-600 text-white font-semibold rounded-full hover:bg-amber-700 transition-colors duration-300 shadow-md hover:shadow-lg text-sm md:text-base"></button>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-white relative overflow-hidden" id="faq">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="inline-flex items-center justify-center mb-6">
-              <div className="w-12 h-0.5 bg-amber-600 mr-4"></div>
-              <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
-                Frequently Asked
+      <section
+        className="relative py-20 overflow-hidden"
+        id="faq"
+        style={{
+          background:
+            "radial-gradient(ellipse at top, rgba(253, 230, 138, 0.15), rgba(254, 243, 199, 0.1)), radial-gradient(ellipse at bottom, rgba(251, 191, 36, 0.2), rgba(254, 243, 199, 0.1))",
+        }}
+      >
+        {/* Animated background elements */}
+        <div className="absolute top-0 left-0 w-full h-72 bg-gradient-to-r from-amber-500/10 to-amber-600/10 transform -skew-y-3 origin-top-left"></div>
+
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-amber-400/20 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-10 -right-20 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl animate-pulse-slower"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center justify-center mb-6 bg-amber-50/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-amber-100/30"
+            >
+              <div className="w-12 h-0.5 bg-amber-600 mr-3"></div>
+              <span className="text-amber-700 font-medium tracking-wider uppercase text-xs">
+                Frequently Asked Questions
               </span>
-              <div className="w-12 h-0.5 bg-amber-600 ml-4"></div>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 font-serif tracking-tight">
-              COMMON <span className="text-amber-700">QUESTIONS</span>
+              <div className="w-12 h-0.5 bg-amber-600 ml-3"></div>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-amber-900 font-serif tracking-tight">
+              Your Questions{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
+                Answered
+              </span>
             </h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Find answers to the most frequently asked questions about our gym,
-              memberships, and training programs.
+            <p className="text-lg text-amber-700/80 leading-relaxed">
+              Find answers to the most frequently asked questions about our
+              premium facilities, memberships, and training programs.
             </p>
-          </div>
+          </motion.div>
 
           <div className="max-w-4xl mx-auto">
-            {[
-              {
-                question: "What are your operating hours?",
-                answer:
-                  "We're open 24/7 for all Performance and Elite members. Essential members have access from 5 AM to 11 PM daily.",
-              },
-              {
-                question: "Do you offer personal training?",
-                answer:
-                  "Yes, we have over 40 certified personal trainers specializing in various disciplines. All our trainers have extensive experience and certifications.",
-              },
-              {
-                question: "Can I freeze my membership?",
-                answer:
-                  "Yes, you can freeze your membership for up to 3 months per year for medical reasons or travel. A small monthly maintenance fee applies during the freeze period.",
-              },
-              {
-                question: "What's included in the free trial?",
-                answer:
-                  "Our 7-day free trial includes access to all facilities, group classes, and one complimentary personal training session.",
-              },
-              {
-                question: "Do you have nutrition guidance?",
-                answer:
-                  "Yes, all our Performance and Elite members receive personalized nutrition plans. We also offer nutrition workshops and one-on-one consultations with our certified nutritionists.",
-              },
-            ].map((faq, index) => (
+            {faqData.map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="border-b border-gray-200 last:border-b-0"
+                className="mb-4"
               >
-                <button
-                  className="flex justify-between items-center w-full py-6 text-left font-semibold text-lg text-gray-900 focus:outline-none"
+                <motion.button
+                  whileHover={{
+                    scale: 1.005,
+                    boxShadow: "0 10px 25px -5px rgba(251, 191, 36, 0.15)",
+                  }}
+                  className={`flex items-start w-full p-6 text-left rounded-xl transition-all duration-300 backdrop-blur-sm ${
+                    activeFaq === index
+                      ? "bg-amber-50/80 shadow-lg border border-amber-200/50"
+                      : "bg-white/70 hover:bg-amber-50/60 shadow-sm border border-amber-100/30"
+                  }`}
                   onClick={() => toggleFaq(index)}
                 >
-                  {faq.question}
-                  <svg
-                    className={`w-5 h-5 text-amber-600 transform transition-transform duration-300 ${
-                      activeFaq === index ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </button>
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    activeFaq === index ? "max-h-96 pb-6" : "max-h-0"
-                  }`}
-                >
-                  <p className="text-gray-700">{faq.answer}</p>
-                </div>
+                  <div className="flex-shrink-0 mr-4 text-amber-700 mt-0.5 bg-amber-100/70 p-2 rounded-lg">
+                    {faq.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-amber-900 text-lg">
+                      {faq.question}
+                    </h3>
+                    <AnimatePresence>
+                      {activeFaq === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <p className="mt-4 text-amber-700/80 leading-relaxed">
+                            {faq.answer}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  <div className="flex-shrink-0 ml-4">
+                    <motion.div
+                      animate={{ rotate: activeFaq === index ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-5 h-5 text-amber-700"
+                    >
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        ></path>
+                      </svg>
+                    </motion.div>
+                  </div>
+                </motion.button>
               </motion.div>
             ))}
           </div>
@@ -1604,6 +1787,34 @@ export default function Home() {
       </footer>
 
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-playfair {
+          font-family: 'Playfair Display', serif;
+        }
+        
+        .shine-effect:after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -60%;
+          width: 20%;
+          height: 200%;
+          background: rgba(255, 255, 255, 0.13);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.13) 0%,
+            rgba(255, 255, 255, 0.13) 77%,
+            rgba(255, 255, 255, 0.5) 92%,
+            rgba(255, 255, 255, 0.0) 100%
+          );
+          transform: rotate(30deg);
+          transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+          pointer-events: none;
+        }
+        
+        .shine-effect:hover:after {
+          left: 130%;
         /* Fade In */
         @keyframes fadeIn {
           from {
@@ -1743,30 +1954,31 @@ export default function Home() {
         .animate-float-medium {
           animation: float-medium 6s ease-in-out infinite;
         }
-
-        /* Glow Floating (Hero background circles) */
+        // glow
         @keyframes float1 {
           0% {
-            transform: translateX(100%) translateY(0);
+            transform: translateX(20%) translateY(0);
           }
           50% {
-            transform: translateX(-40%) translateY(-10%);
+            transform: translateX(-20%) translateY(-10%);
           }
           100% {
-            transform: translateX(100%) translateY(0);
+            transform: translateX(20%) translateY(0);
           }
         }
+
         @keyframes float2 {
           0% {
-            transform: translateX(-100%) translateY(10%);
+            transform: translateX(-20%) translateY(10%);
           }
           50% {
-            transform: translateX(40%) translateY(-20%);
+            transform: translateX(20%) translateY(-10%);
           }
           100% {
-            transform: translateX(-100%) translateY(10%);
+            transform: translateX(-20%) translateY(10%);
           }
         }
+
         .animate-glow1 {
           animation: float1 6s ease-in-out infinite alternate;
         }
@@ -1830,6 +2042,31 @@ export default function Home() {
           background-image: radial-gradient(currentColor 1px, transparent 1px);
           background-size: 20px 20px;
           opacity: 0.1;
+        }
+
+        @keyframes pulse-slow {
+          0%,
+          100% {
+            opacity: 0.7;
+          }
+          50% {
+            opacity: 0.9;
+          }
+        }
+        @keyframes pulse-slower {
+          0%,
+          100% {
+            opacity: 0.5;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .animate-pulse-slower {
+          animation: pulse-slower 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
     </div>
