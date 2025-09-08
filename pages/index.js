@@ -307,6 +307,7 @@ export default function Home() {
                 Elite
               </span>
               <span className="text-amber-700 drop-shadow-[0_0_6px_rgba(139,69,19,0.9)]">
+                {" "}
                 Performance
               </span>
             </h1>
@@ -1390,26 +1391,29 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <div className="w-8 md:w-12 h-0.5 bg-amber-600 mr-4"></div>
-              <span className="text-amber-700 font-semibold tracking-wider uppercase text-sm">
+              <div className="w-8 md:w-12 h-0.5 bg-amber-400 mr-4"></div>
+              <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm drop-shadow-lg [text-shadow:_0_0_6px_rgba(255,255,255,0.8),_2px_2px_6px_rgba(0,0,0,0.9)] [paint-order:stroke_fill] [stroke:1px_white]">
                 World-Class Facilities
               </span>
-              <div className="w-8 md:w-12 h-0.5 bg-amber-600 ml-4"></div>
+              <div className="w-8 md:w-12 h-0.5 bg-amber-400 ml-4"></div>
             </motion.div>
 
             <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900 font-serif tracking-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white font-serif tracking-tight drop-shadow-xl [text-shadow:_0_0_10px_rgba(255,255,255,0.8),_2px_2px_6px_rgba(0,0,0,0.9)] [paint-order:stroke_fill] [stroke:1px_white]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              PREMIUM <span className="text-amber-700">TRAINING</span>{" "}
+              PREMIUM{" "}
+              <span className="text-amber-400 glow-amber drop-shadow-lg [paint-order:stroke_fill] [stroke:1px_white]">
+                TRAINING
+              </span>{" "}
               ENVIRONMENT
             </motion.h2>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-700 leading-relaxed"
+              className="text-lg md:text-xl text-white leading-relaxed drop-shadow-md [text-shadow:_0_0_6px_rgba(255,255,255,0.7),_1px_1px_4px_rgba(0,0,0,0.8)]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -1787,6 +1791,20 @@ export default function Home() {
       </footer>
 
       <style jsx global>{`
+      @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+            @keyframes pulse-glow {
+          0%, 100% {
+            text-shadow: 0 0 12px rgba(255,193,7,0.7), 2px 2px 6px rgba(0,0,0,0.9);
+          }
+          50% {
+            text-shadow: 0 0 24px rgba(255,193,7,1), 2px 2px 8px rgba(0,0,0,1);
+          }
+        }
+        .glow-amber {
+          animation: pulse-glow 2s infinite;
+        }
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
         
         .font-playfair {
